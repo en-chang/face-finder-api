@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,13 @@ const database = {
       entries: 4,
       joined: new Date()
     },
+  ],
+  login: [
+    {
+      id: '987',
+      hash: '',
+      email: 'john@gmail.com'
+    }
   ]
 }
 
@@ -32,6 +40,13 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signin', (req, res) => {
+  // Load hash from your password DB.
+  bcrypt.compare("apples", "$2a$10$/8hzsGhmsPpxKdM5nbk6yORPYeWfYJYfCdkkDt7itF9K1/Fua72Mm", function(err, res) {
+    console.log('first guess', res);
+  });
+  bcrypt.compare("!apples", "$2a$10$/8hzsGhmsPpxKdM5nbk6yORPYeWfYJYfCdkkDt7itF9K1/Fua72Mm", function(err, res) {
+    console.log('second guess', res);
+  });
   if (req.body.email === database.users[0].email &&
       req.body.password === database.users[0].password) {
     res.json('success');
@@ -42,6 +57,11 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { name, email, password } = req.body;
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(password, salt, function(err, hash) {
+        console.log(hash);
+    });
+  });
   database.users.push({
     id: '12345',
     name: name,
