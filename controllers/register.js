@@ -1,7 +1,7 @@
 const handleRegister = (req, res, db, bcrypt) => {
   const { name, email, password } = req.body;
-  if (password === undefined) {
-    res.status(400).json('undefined password');
+  if (!name || !email || !password) {
+    return res.status(400).json('incorrect form submission');
   }
   // Used to encrypt password
   const salt = bcrypt.genSaltSync(10);
