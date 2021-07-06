@@ -8,12 +8,19 @@ const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
 const db = knex({
+  // client: 'pg',
+  // connection: {
+  //   connectionString: process.env.DATABASE_URL,
+  //   ssl: {
+  //     rejectUnauthorized: false
+  //   }
+  // }
   client: 'pg',
   connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
+    host : '127.0.0.1',
+    user : '',
+    password : '',
+    database : 'face-finder'
   }
 });
 
