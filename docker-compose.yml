@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  face-finder-api:
+    container_name: backend
+    # image: node: node:14.17.1
+    build: ./
+    command: npm run start:dev
+    working_dir: /usr/src/face-finder-api
+    ports:
+      - "3000:3000"
