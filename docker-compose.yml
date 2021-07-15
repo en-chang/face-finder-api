@@ -10,8 +10,6 @@ services:
     working_dir: /usr/src/face-finder-api
     environment:
       POSTGRES_URI: postgres://user:secret@postgres:5432/face-finder-docker
-    links:
-      - postgres
     ports:
       - "3000:3000"
     volumes:
