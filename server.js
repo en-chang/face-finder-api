@@ -12,15 +12,13 @@ const image = require('./controllers/image');
 const { requireAuth } = require('./controllers/authorization');
 
 const db = knex({
-  // client: 'pg',
-  // connection: {
-  //   connectionString: process.env.DATABASE_URL,
-  //   ssl: {
-  //     rejectUnauthorized: false
-  //   }
-  // }
   client: 'pg',
-  connection: process.env.POSTGRES_URI
+  connection: {
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }
+  }
 });
 
 const app = express();
@@ -39,5 +37,6 @@ app.post('/profile/:id', auth.requireAuth, (req, res) => { profile.handleProfile
 app.put('/image', auth.requireAuth, (req, res) => { image.handleImage(req, res, db) })
 app.post('/imageurl', auth.requireAuth, (req, res) => { image.handleApiCall(req, res) })
 
-// app.listen(process.env.PORT || 3000, () => {})
-app.listen(3000, () => {})
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`app is running on port ${process.env.PORT}`)
+})
